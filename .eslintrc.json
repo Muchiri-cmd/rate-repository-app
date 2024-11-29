@@ -7,6 +7,17 @@
   },
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false, 
+    "babelOptions":{
+      "presets": ["@babel/preset-react"],
+      "cwd": "/home/muchiri/React-Native/rate-repository-app/babel.config.js"
+    }
+    
+  },
+
+
+
   "env": {
     "react-native/react-native": true
   },
