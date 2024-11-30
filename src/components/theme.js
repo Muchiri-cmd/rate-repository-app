@@ -4,7 +4,9 @@ const theme = {
     textSecondary: '#586069',
     white:'#FFFFFF',
     primary: '#0366d6',
-    appBarBg:'#24292e'
+    appBarBg:'#24292e',
+    MainBg:'#e1e4e8',
+    RepoItemBg:'white',
   },
   fontSizes: {
     body: 14,
