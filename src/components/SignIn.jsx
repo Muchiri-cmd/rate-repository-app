@@ -1,6 +1,17 @@
-import { Button,TextInput,View,StyleSheet} from 'react-native';
+import { Button,TextInput,View,StyleSheet,Text} from 'react-native';
 import { useFormik } from 'formik';
 import theme from './theme';
+import * as yup from 'yup';
+
+const validationSchema = yup.object().shape({
+  username:yup.string()
+    .required('Username is required')
+    .min(3,'Username must be atleast 3 characters')
+    .matches(/^[a-zA-Z0-9_]+$/,"Username can only contain letters,numbers and underscores"),
+  password: yup.string()
+    .required('Password is required')
+    .min(8,"Paswsord must be atleast 8 characters")
+});
 
 const initialValues = {
   username : '',
@@ -10,24 +21,33 @@ const initialValues = {
 const LoginForm = ({ onSubmit }) => {
   const formik = useFormik({
     initialValues,
+    validationSchema,
     onSubmit
   });
+
+  const { errors, touched } = formik;
 
   return (
     <View style={styles.form}>
       <TextInput
-        style={styles.input}
+        style={errors.username && touched.username ? styles.ErrorInput: styles.input}
         placeholder="Username"
         value = {formik.values.username}
         onChangeText={formik.handleChange('username')}
       />
+      {formik.touched.username && formik.errors.username && (
+        <Text style={styles.ErrorText}>{formik.errors.username}</Text>
+      )}
       <TextInput 
-        style={styles.input}
+        style={errors.password && touched.password ? styles.ErrorInput: styles.input}
         placeholder = "Password"
         secureTextEntry = {true}
         value = { formik.values.password}
         onChangeText = { formik.handleChange('password')}
       />
+      {formik.touched.password && formik.errors.password && (
+        <Text style={styles.ErrorText}>{formik.errors.password}</Text>
+      )}
       <Button 
         onPress={formik.handleSubmit}
         title="Sign in"
@@ -56,16 +76,28 @@ const SignIn = () => {
 const styles = StyleSheet.create({
   form : {
     backgroundColor:theme.colors.white,
-    padding:15,
+    padding:10,
     display:'flex',
   },
   input:{
     height:40,
-    margin:12,
+    margin:8,
     borderColor: 'gray',
     borderRadius:8,
     borderWidth:1,
     padding:10,
+  },
+  ErrorText:{
+    color:theme.colors.error,
+    marginLeft:13,
+  },
+  ErrorInput:{
+    height:40,
+    margin:8,
+    borderRadius:8,
+    borderWidth:1,
+    padding:10,
+    borderColor: theme.colors.error,
   }
  
 })

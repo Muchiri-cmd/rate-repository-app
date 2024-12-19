@@ -7,6 +7,7 @@ const theme = {
     appBarBg:'#24292e',
     MainBg:'#e1e4e8',
     RepoItemBg:'white',
+    error:'#d73a4a'
   },
   fontSizes: {
     body: 14,
