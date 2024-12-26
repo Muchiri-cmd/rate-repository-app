@@ -3,9 +3,9 @@ import { useFormik } from 'formik';
 import theme from './theme';
 import * as yup from 'yup';
 import useSignIn from '../hooks/useSignIn';
-import AuthStorage from '../utils/authStorage';
+// import AuthStorage from '../utils/authStorage';
 
-const authStorage = new AuthStorage()
+// // const authStorage = new AuthStorage()
 
 const validationSchema = yup.object().shape({
   username:yup.string()
@@ -69,14 +69,7 @@ const SignIn = () => {
     const { username,password } = values
 
     try{
-      const accessToken = await signIn ({ username,password });
-      // console.log(accessToken);
-
-      await authStorage.setAccessToken(accessToken);
-
-      // const token = await authStorage.getAccessToken();
-      // console.log(token);
-
+      await signIn ({ username,password });
     } catch( error ){
       console.log(error)
     }
