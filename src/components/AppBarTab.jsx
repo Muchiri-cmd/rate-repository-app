@@ -8,10 +8,10 @@ const styles = StyleSheet.create({
     marginTop:15
   }
 })
-const AppBarTab = ({ label,to }) => {
+const AppBarTab = ({ label,to, onPress}) => {
 
   return (
-    <Link to={to} component={Pressable}>
+    <Link to={to} component={Pressable} onPress={onPress}>
         <Text color="white" fontSize="subheading" fontWeight="bold" style={styles.textStyle}>
           {label}
         </Text>
