@@ -5,6 +5,10 @@ import theme from './theme';
 //Displays counts such as the number of stars and forks larger than or equal to 1000 
 //in thousands with the precision of one decimal and with a "k" suffix.
 const formatCount = (count) => {
+  if (count === undefined || count === null) {
+    return '0';
+  }
+
   if (count >= 1000) {
     const roundedCount = Math.floor(count / 1000);
     if (count % 1000 === 0) {
@@ -20,7 +24,7 @@ const formatCount = (count) => {
 
 const RepositoryItem = (props) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID='repositoryItem'>
 
       <View style={styles.flex}>
         <Image

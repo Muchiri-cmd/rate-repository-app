@@ -5,7 +5,11 @@ const useRepositories = () => {
   const { data,error,loading } = useQuery(GET_REPOSITORIES,{
     fetchPolicy:'cache-and-network',
   })
-  return {data,error,loading };
+  
+  const repositories = data?.repositories; 
+
+  return {repositories,error,loading };
+  
 
 }
 
