@@ -45,13 +45,14 @@ const AppBar = () => {
         showsHorizontalScrollIndicator={false}
       >
         <AppBarTab label="Repositories" to="/" />
+        <AppBarTab label="Create Review" to="/review" />
 
         { currentUser ? 
           <AppBarTab label="Sign Out" to="/sign-in" onPress={handleSignOut}/>
            :
           <AppBarTab label="Sign in" to="/sign-in" />
         }
-       
+         
       </ScrollView>
   </View>
   )
