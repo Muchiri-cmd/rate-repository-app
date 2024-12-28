@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, Pressable } from 'react-native';
+import { View, StyleSheet, Image, Pressable,Button } from 'react-native';
 import Text from './Text';
 import theme from './theme';
 
@@ -65,6 +65,9 @@ const RepositoryItem = (props) => {
         </View>
       </View>
 
+      {props.openInGithub && (
+        <Button title="Open in Github" onPress={props.openInGithub} />
+      )}
     </View>
   );
 };

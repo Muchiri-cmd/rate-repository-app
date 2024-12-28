@@ -4,8 +4,6 @@ import useRepositories from '../hooks/useRepos';
 import { Text,Pressable } from 'react-native';
 import { useNavigate } from 'react-router';
 
-
-
 const styles = StyleSheet.create({
   separator:{
     height:2,
@@ -47,5 +45,7 @@ const RepositoryList = () => {
  
   return <RepositoryListContainer repositories={repositories}/>
 };
+
+
 
 export default RepositoryList;
