@@ -5,8 +5,10 @@ import { Pressable } from 'react-native';
 import { useNavigate } from 'react-router';
 import LoadingOrError from './LoadingOrError';
 import { useState } from 'react';
-import { Picker } from '@react-native-picker/picker';
-
+import OrderSelector from './OrderSelector';
+import SearchBar from './SearchBar';
+import useSearch from '../hooks/useSearch';
+import { useDebounce } from 'use-debounce'
 
 const styles = StyleSheet.create({
   separator:{
@@ -17,13 +19,11 @@ const styles = StyleSheet.create({
 const ItemSeperator = () => <View style={styles.separator} />;
 
 export const RepositoryListContainer = ({ repositories }) => {
-
     const navigate = useNavigate();
     //Get nodes from edges array
     const repositoryNodes = repositories?.edges
     ? repositories?.edges.map(edge => edge.node)
     : []  
-
 
     return (
       <FlatList
@@ -46,42 +46,33 @@ const RepositoryList = () => {
   const [orderBy, setOrderBy] = useState('CREATED_AT');
   const [orderDirection, setOrderDirection] = useState('DESC');
 
-  const { repositories, error, loading } = useRepositories(orderBy, orderDirection);
+  const [ searchQuery,setSearchQuery ] = useState('')
+  const [ debouncedQuery ] = useDebounce(searchQuery)
 
-  if (loading || error) {
-    return <LoadingOrError loading={loading} error={error} />;
+  const { repositories:sortedRepos,error:sortedReposError,
+     loading:sortedReposLoading } = useRepositories(orderBy, orderDirection);
+
+  const { repositories:filteredRepos } = useSearch(debouncedQuery)
+
+  if (sortedReposError || sortedReposLoading) {
+    return <LoadingOrError loading={sortedReposLoading} error={sortedReposError} />;
   }
 
-  const handlePickerChange = (itemValue) => {
-    setSelectedSort(itemValue);
-    
-    switch(itemValue) {
-      case 'highest':
-        setOrderBy('RATING_AVERAGE');
-        setOrderDirection('DESC');
-        break;
-      case 'lowest':
-        setOrderBy('RATING_AVERAGE');
-        setOrderDirection('ASC');
-        break;
-      case 'latest':
-        setOrderBy('CREATED_AT');
-        setOrderDirection('DESC');
-        break;
-    }
-  };
+  const repositories = searchQuery ? filteredRepos : sortedRepos
 
   return (
     <>
-      <Picker
-        selectedValue={selectedSort}
-        onValueChange={handlePickerChange}
-      >
-        <Picker.Item label="Latest Repositories" value="latest" />
-        <Picker.Item label="Highest Rated Repositories" value="highest" />
-        <Picker.Item label="Lowest Rated Repositories" value="lowest" />
-      </Picker>
-
+      <SearchBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
+      {/* allows user to list repositories in order */}
+      <OrderSelector
+        selectedSort={selectedSort}
+        setSelectedSort={setSelectedSort}
+        setOrderBy={setOrderBy}
+        setOrderDirection={setOrderDirection}
+      />
       <RepositoryListContainer repositories={repositories} />
     </>
   );

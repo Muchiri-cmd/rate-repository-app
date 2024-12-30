@@ -58,3 +58,16 @@ export const GET_REPOSITORY = gql`
     }
     ${REPOSITORY_FIELDS}
 `
+
+export const SEARCH_REPOSITORY = gql`
+  query($searchKeyword:String!){
+    repositories(searchKeyword:$searchKeyword){
+      edges{
+        node{
+          ...RepositoryFields
+        }
+      }
+    }
+  }
+  ${REPOSITORY_FIELDS}
+`
