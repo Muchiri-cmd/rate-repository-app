@@ -4,6 +4,7 @@ import * as Linking from 'expo-linking';
 import { useParams } from "react-router-native";
 import theme from "./theme";
 import useRepo from "../hooks/useRepo";
+import LoadingOrError from "./LoadingOrError";
 
 
 const Repository = () => {
@@ -14,8 +15,9 @@ const Repository = () => {
   
   // console.log("Data",data?.repository?.reviews?.edges)
 
-  if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error: {error.message}</Text>;
+  if (loading || error){
+    <LoadingOrError loading={loading} error={error}/>
+  }
 
   const openInGithub = () => {
     Linking.openURL(data?.repository?.url)
@@ -23,7 +25,7 @@ const Repository = () => {
   
   return (
     <View style={{ flex:1 }}>
-      <RepositoryItem {...data.repository} openInGithub={openInGithub} />
+      <RepositoryItem {...data?.repository} openInGithub={openInGithub} />
       <Reviews reviews={data?.repository?.reviews?.edges}/>
     </View>
   )

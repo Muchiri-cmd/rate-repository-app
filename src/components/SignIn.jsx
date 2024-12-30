@@ -14,7 +14,7 @@ const validationSchema = yup.object().shape({
     .matches(/^[a-zA-Z0-9_]+$/,"Username can only contain letters,numbers and underscores"),
   password: yup.string()
     .required('Password is required')
-    .min(8,"Paswsord must be atleast 8 characters")
+    .min(5,"Paswsord must be atleast 5 characters")
 });
 
 const initialValues = {
@@ -47,7 +47,7 @@ const LoginForm = ({ onSubmit }) => {
         placeholder = "Password"
         secureTextEntry = {true}
         value = { formik.values.password}
-        onChangeText = { formik.handleChange('password')}
+        onChangeText = {formik.handleChange('password')}
       />
       {formik.touched.password && formik.errors.password && (
         <Text style={styles.ErrorText}>{formik.errors.password}</Text>

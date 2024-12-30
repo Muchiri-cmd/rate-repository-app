@@ -56,7 +56,7 @@ const ReviewForm = () => {
         style={errors.rating && touched.rating ? styles.ErrorInput: styles.input}
         keyboardType="numeric"
         placeholder="Rating (0-100)"
-        value={formik.values.rating}
+        value={formik.values.rating.toString()}
         onChangeText={formik.handleChange('rating')}
         min = '0'
         max = '100'

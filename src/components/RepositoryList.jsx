@@ -1,8 +1,9 @@
 import {FlatList,View,StyleSheet} from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepos';
-import { Text,Pressable } from 'react-native';
+import { Pressable } from 'react-native';
 import { useNavigate } from 'react-router';
+import LoadingOrError from './LoadingOrError';
 
 const styles = StyleSheet.create({
   separator:{
@@ -40,9 +41,9 @@ export const RepositoryListContainer = ({ repositories }) => {
 const RepositoryList = () => {
   const { repositories,error,loading } = useRepositories();
 
-  if (loading) return <Text>Loading...</Text>
-  if (error) return <Text>Error fetching repos</Text>
- 
+  if (loading || error) {
+    return <LoadingOrError loading={loading} error={error} />;
+  }
   return <RepositoryListContainer repositories={repositories}/>
 };
 
