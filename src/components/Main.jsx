@@ -28,7 +28,7 @@ const Main = () => {
         <Route path="/sign-up" element = {<SignUp />}/>
         <Route path="/repo/:id" element={<Repository  />} />
         <Route path="/review" element={<ReviewForm />}/>
-        <Route path="/myreviews" element={< Reviews/>} />
+        <Route path="/myreviews" element={< Reviews reviewActions={true}/>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>

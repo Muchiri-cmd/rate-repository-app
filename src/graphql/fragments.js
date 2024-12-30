@@ -18,6 +18,7 @@ import { gql } from "@apollo/client"
 export const REVIEW_FIELDS = gql`
   fragment ReviewFields on Review {
     id 
+    repositoryId
     text
     rating
     createdAt

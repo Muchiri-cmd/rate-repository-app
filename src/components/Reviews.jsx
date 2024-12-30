@@ -5,8 +5,8 @@ import useReviews from '../hooks/useReviews'
 import LoadingOrError from './LoadingOrError'
 
 
-const Reviews = ({ reviews }) => {
-  const {data, error, loading} = useReviews();
+const Reviews = ({ reviews,reviewActions = false }) => {
+  const {data, error, loading ,refetch } = useReviews();
 
   if ( error || loading ){
     return(
@@ -20,7 +20,7 @@ const Reviews = ({ reviews }) => {
   return (
     <FlatList
       data={reviews}
-      renderItem={({ item }) => <ReviewItem review={item.node} />}
+      renderItem={({ item }) => <ReviewItem review={item.node} reviewActions={reviewActions} refetch={refetch}/>}
       keyExtractor={({ node }) => node.id}
     />
   )

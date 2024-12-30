@@ -1,7 +1,12 @@
-import { View,Text,StyleSheet } from "react-native"
+import { View,Text,StyleSheet,Button,Alert } from "react-native"
 import theme from "./theme";
+import { useNavigate } from 'react-router';
+import useDeleteReview from "../hooks/useDeleteReview";
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review,reviewActions,refetch }) => {
+  const navigate = useNavigate();
+  const { deleteReviewById } = useDeleteReview()
+
   return(
     <View style={styles.container}>
       <View style={styles.review_info}>
@@ -12,11 +17,39 @@ const ReviewItem = ({ review }) => {
               <Text style={styles.text}>{review.text}</Text>
           </View>        
       </View>
-    </View>
-  )
-  
-}
+      {reviewActions && (
+        <View style={styles.buttons}>
 
+          <Button title="View Repository"
+            onPress={() => { 
+              navigate(`/repo/${review.repositoryId}`)
+            }}
+          />
+
+          <Button title="Delete Review" 
+            color="#dc3545"
+            onPress={() => {
+              Alert.alert(
+                'Confirm Deletion',
+                'Are you sure you want to delete this review?',
+                [{ text: 'Cancel'},
+                  {text: 'Delete',
+                    onPress: async() => {
+                      await deleteReviewById(review.id);
+                      refetch();
+                    },
+                  },
+                ],
+                { cancelable: true } //cancels when sb clicks outside
+              );
+            }}
+          />
+        </View>
+      )}
+      
+    </View>
+  ) 
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -46,6 +79,14 @@ const styles = StyleSheet.create({
   },
   text:{
     flexWrap:'wrap'
+  },
+  buttons:{
+    display:'flex',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center',
+    gap:10,
+    margin:8,
   }
 })
 
