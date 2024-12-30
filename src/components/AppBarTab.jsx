@@ -5,14 +5,15 @@ import { Link } from 'react-router-native';
 
 const styles = StyleSheet.create({
   textStyle:{
-    marginTop:15
+    marginTop:15,
+    fontSize:13
   }
 })
 const AppBarTab = ({ label,to, onPress}) => {
 
   return (
     <Link to={to} component={Pressable} onPress={onPress}>
-        <Text color="white" fontSize="subheading" fontWeight="bold" style={styles.textStyle}>
+        <Text color="white" fontWeight="bold" style={styles.textStyle}>
           {label}
         </Text>
     </Link>

@@ -15,3 +15,15 @@ import { gql } from "@apollo/client"
       url
     }
 `
+export const REVIEW_FIELDS = gql`
+  fragment ReviewFields on Review {
+    id 
+    text
+    rating
+    createdAt
+    user {
+      id
+      username
+    }
+  }
+`

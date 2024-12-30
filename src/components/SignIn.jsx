@@ -5,8 +5,6 @@ import * as yup from 'yup';
 import useSignIn from '../hooks/useSignIn';
 // import AuthStorage from '../utils/authStorage';
 
-
-
 const validationSchema = yup.object().shape({
   username:yup.string()
     .required('Username is required')
@@ -73,12 +71,6 @@ const SignIn = () => {
     } catch( error ){
       console.log(error)
     }
-
-    // if (password && username ){
-    //   console.log(`password: ${password} \n username:${username}`)
-    // } else {
-    //   console.log(`Kindly enter correct login credentials`)
-    // }
   }
   
   return <LoginForm onSubmit={onSubmit} />

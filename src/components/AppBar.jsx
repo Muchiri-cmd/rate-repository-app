@@ -48,6 +48,7 @@ const AppBar = () => {
         { currentUser ? 
         <>
             <AppBarTab label="Create Review" to="/review" />
+            <AppBarTab label="My Reviews" to="/myreviews" />
             <AppBarTab label="Sign Out" to="/sign-in" onPress={handleSignOut}/>
         </>
        
@@ -55,11 +56,8 @@ const AppBar = () => {
            <>
             <AppBarTab label="Sign in" to="/sign-in" />
             <AppBarTab label="Sign Up" to="/sign-up" />
-           </>
-          
-          
+           </> 
         }
-         
       </ScrollView>
   </View>
   )
