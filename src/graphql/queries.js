@@ -14,6 +14,18 @@ export const GET_REPOSITORIES = gql`
   }
   ${REPOSITORY_FIELDS}
 `
+export const GET_ORDERED_REPOSITORIES = gql`
+  query GetOrderedRepositories($orderBy:AllRepositoriesOrderBy!,$orderDirection:OrderDirection!){
+    repositories(orderBy:$orderBy,orderDirection:$orderDirection){
+      edges{
+        node{
+          ...RepositoryFields
+        }
+      }
+    }
+  }
+  ${REPOSITORY_FIELDS}
+`
 
 export const GET_CURRENT_USER = gql`
   {

@@ -9,6 +9,8 @@ import { gql } from "@apollo/client"
       description
       forksCount
       stargazersCount
+      ratingAverage
+      reviewCount
       language
       url
     }
