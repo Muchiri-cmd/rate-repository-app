@@ -2,25 +2,31 @@ import { gql } from '@apollo/client';
 import { REPOSITORY_FIELDS, REVIEW_FIELDS } from './fragments';
 
 
-export const GET_REPOSITORIES = gql`
-  query{
-    repositories {
-      edges {
-        node {
-          ...RepositoryFields
-        }
-      }
-    }
-  }
-  ${REPOSITORY_FIELDS}
-`
+// export const GET_REPOSITORIES = gql`
+//   query{
+//     repositories {
+//       edges {
+//         node {
+//           ...RepositoryFields
+//         }
+//       }
+//     }
+//   }
+//   ${REPOSITORY_FIELDS}
+// `
 export const GET_ORDERED_REPOSITORIES = gql`
-  query GetOrderedRepositories($orderBy:AllRepositoriesOrderBy!,$orderDirection:OrderDirection!){
-    repositories(orderBy:$orderBy,orderDirection:$orderDirection){
+  query GetOrderedRepositories($orderBy:AllRepositoriesOrderBy!,$orderDirection:OrderDirection!,$first:Int!,$after:String){
+    repositories(orderBy:$orderBy,orderDirection:$orderDirection,first:$first,after:$after){
       edges{
         node{
           ...RepositoryFields
         }
+        cursor
+      }
+      pageInfo{
+        endCursor
+        hasPreviousPage
+        hasNextPage
       }
     }
   }
@@ -45,14 +51,21 @@ export const GET_CURRENT_USER = gql`
 `
 
 export const GET_REPOSITORY = gql`
-    query GetRepository($id:ID!){
+    query GetRepository($id:ID!,$first:Int!,$after:String){
       repository(id: $id){
         ...RepositoryFields
-        reviews {
-          edges{
-          node{
-           ...ReviewFields
+        reviews (first:$first,after:$after){
+          totalCount
+          edges {
+            node{
+              ...ReviewFields
+            }
+            cursor
           }
+          pageInfo {
+            endCursor
+            startCursor
+            hasNextPage
           }
         }
       }

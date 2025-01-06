@@ -11,9 +11,11 @@ import LoadingOrError from "./LoadingOrError";
 
 const Repository = () => {
   const { id: repoId } = useParams();
+  const first = 3;
+
   // console.log("repoId:",repoId)
 
-  const { data, loading, error } = useRepo(repoId);
+  const { data, loading, error,fetchMoreReviews } = useRepo(repoId,first);
   
   // console.log("Data",data?.repository?.reviews?.edges)
 
@@ -28,7 +30,7 @@ const Repository = () => {
   return (
     <View style={{ flex:1 }}>
       <RepositoryItem {...data?.repository} openInGithub={openInGithub} />
-      <Reviews reviews={data?.repository?.reviews?.edges}/>
+      <Reviews reviews={data?.repository?.reviews?.edges} fetchMoreReviews={fetchMoreReviews}/>
     </View>
   )
 }
